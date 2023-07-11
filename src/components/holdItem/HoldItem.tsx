@@ -360,6 +360,16 @@ const HoldItemComponent = ({
   const animatedPortalProps = useAnimatedProps<ViewProps>(() => ({
     pointerEvents: isActive.value ? 'auto' : 'none',
   }));
+
+  const [isActiveJs, setIsActiveJs] = React.useState(isActive.value);
+
+  useAnimatedReaction(
+    () => isActive.value,
+    state => {
+      runOnJS(setIsActiveJs)(state);
+    },
+    [isActive]
+  );
   //#endregion
 
   //#region animated effects
@@ -424,7 +434,7 @@ const HoldItemComponent = ({
     <>
       <GestureHandler>
         <Animated.View ref={containerRef} style={containerStyle}>
-          {children}
+          {typeof children === 'function' ? children(isActiveJs) : children}
         </Animated.View>
       </GestureHandler>
 
@@ -435,7 +445,7 @@ const HoldItemComponent = ({
           animatedProps={animatedPortalProps}
         >
           <PortalOverlay />
-          {children}
+          {typeof children === 'function' ? children(isActiveJs) : children}
         </Animated.View>
       </Portal>
     </>

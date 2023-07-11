@@ -33,7 +33,7 @@ export type HoldItemProps = {
     [name: string]: any[];
   };
 
-  children: React.ReactElement | React.ReactElement[];
+  children: React.ReactNode | ((isActive: boolean) => React.ReactNode);
 
   /**
    * Menu anchor position is calculated automaticly.
