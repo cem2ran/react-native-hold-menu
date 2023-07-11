@@ -28,6 +28,6 @@ export interface HoldMenuProviderProps {
     left: number;
   };
 
-  onOpen?: function;
-  onClose?: function;
+  onOpen?: (...args: any[]) => unknown;
+  onClose?: (...args: any[]) => unknown;
 }
